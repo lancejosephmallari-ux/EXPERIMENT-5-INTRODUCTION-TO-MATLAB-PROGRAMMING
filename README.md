@@ -44,7 +44,7 @@ A.’
 # A. CODING AND BREAKDOWN OF CODE
 
 ### CODE:
-1. Define real matrix R and complex matrix Z
+1. Define real matrix R and complex matrix Z while also including their transposed forms
 ```
 % Matrix R:
 
@@ -124,16 +124,17 @@ Z_Dot_Apostrophe = 3×2 complex
 ```
 Code Breakdown per line:
 - `R = [...]`: This defines the real 3 x 4 matrix R.
-- `,`: or spaces count as the separation between elements within the matrix.
--  `;`: separates the matrix rows.
--  `transpose(R)`,`R'`, `R.'`: transposes matrix R.
+- `,`: Or spaces count as the separation between elements within the matrix.
+-  `;`: Separates the matrix rows.
+-  `transpose(R)`,`R'`, `R.'`: Transposes matrix R.
 -  `Z = [...]`: Defines the 2 x 3 complex matrix Z using MATLAB's built-in imaginary unit.
--  `transpose(Z)`,`Z'`, `Z.'`: transposes matrix Z.
+-  `transpose(Z)`,`Z'`, `Z.'`: Transposes matrix Z.
 
 ---
 # Q and A for PART A:
 where A is replaced by R and then by Z.
 Answer the following in MATLAB comments below your output:
+
 a. Which operations give identical results for the real matrix R?
 
 `Answer: All three operations — transpose(R), R', and R.' all produce identical results for the real matrix R.`
@@ -159,6 +160,8 @@ Do not use MATLAB’s left-division operator as either of the two required metho
 Required checks: Display both solution vectors and det(A). Also display norm(x inv-x cramer) and norm(A*x inv-b). The determinant must be nonzero. Both norm checks should be approximately zero to numerical precision.
 
 # B. CODING AND BREAKDOWN OF CODE
+### CODE:
+2. Define matrices A and b for the operations to be performed
 ```
 % Coefficient matrix A  
 A = [ 2 -1  3  2;
@@ -206,3 +209,106 @@ x_cramer
 normdiff = norm(x_inv-x_cramer)
 normprod = norm(A * x_inv - b)
 ```
+### OUTPUT:
+```
+A = 4×4
+      2     -1      3      2
+      1      4     -2      1
+      3      2      1     -1
+     -2      3      4      2
+
+
+b = 4×1
+     16
+     -7
+      6
+      7
+
+
+detA =
+
+   280
+
+
+x_inv = 4×1
+      2.0000
+     -1.0000
+      3.0000
+      1.0000
+
+
+A1 = 4×4
+     16     -1      3      2
+     -7      4     -2      1
+      6      2      1     -1
+      7      3      4      2
+
+
+detA1 =
+
+   560
+
+
+A2 = 4×4
+      2     16      3      2
+      1     -7     -2      1
+      3      6      1     -1
+     -2      7      4      2
+
+
+detA2 =
+
+  -280
+
+
+A3 = 4×4
+      2     -1     16      2
+      1      4     -7      1
+      3      2      6     -1
+     -2      3      7      2
+
+
+detA3 =
+
+  840.0000
+
+
+A4 = 4×4
+      2     -1      3     16
+      1      4     -2     -7
+      3      2      1      6
+     -2      3      4      7
+
+
+detA4 =
+
+   280
+
+
+x_cramer = 4×1
+      2.0000
+     -1.0000
+      3.0000
+      1.0000
+
+
+normdiff =
+
+   1.1102e-16
+
+
+normprod =
+
+   2.6645e-15
+```
+Code Breakdown per line:
+- `A = [...]`: This defines the 4 x 4 coefficient matrix A.
+- `b = [...]`: This defines the 4 x 1 constant column vector b.
+- `det(A)`: It computes the determinant of matrix A to ensure non-singularity (det(A) is not equal to 0).
+- `inv(A)*b`: Calculates the solution vector x_inv via the matrix inverse method.
+- `A1(:, 1) = b, A2(:, 2) = b, etc.`: Replaces the k-th column of the coefficient matrix A with vector b to form modified matrices for Cramer's Rule.
+- `[det(A1); det(A2); det(A3); det(A4)] / det(A)`: Solves for each variable using Cramer's Rule ratio of determinants.
+- `norm(x_inv - x_cramer)`: Evaluates the norm of the difference vector between solutions to check equivalence.
+- `norm(A * x_inv - b)`: Calculates the residual norm to verify the accuracy of the computed solution.
+
+# ===END OF NOTEBOOK===
